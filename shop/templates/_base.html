@@ -1,26 +1,32 @@
-<!doctype html>
+{% load static %}
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}" type="text/css">
     <title>{% block title %}Магазин{% endblock %}</title>
 </head>
 <body>
     <header>
-        <nav>
-            <a href="/">Главная</a>
-            {% if user.is_authenticated %}
-                <form method="post" action="{% url 'logout' %}" style="display: inline;">
+        <nav class="main-nav">
+        <a href="/">Главная</a>
+        <a href="#">Контакты</a>
+        {% if user.is_authenticated %}
+            <a href="{% url 'profile' %}">Профиль</a>
+            <form method="post" action="{% url 'logout' %}" class="logout-form">
                 {% csrf_token %}
-                <button type="submit">Выйти</button>
-                </form>
-            {% else %}
-                <a href="{% url 'login' %}">Вход</a>
-                <a href="{% url 'register' %}">Регистрация</a>
-            {% endif %}
-        </nav>
+
+            </form>
+            <a href="{% url 'cart_detail' %}" class="cart-button">Корзина</a>
+        {% else %}
+            <a href="{% url 'login' %}">Вход</a>
+            <a href="{% url 'register' %}">Регистрация</a>
+        {% endif %}
+
+    </nav>
     </header>
     {% block content %}
     {% endblock %}

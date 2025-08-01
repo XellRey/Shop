@@ -4,5 +4,5 @@ from .models import CustomUser
 
 class CustomUserCreationForm(UserCreationForm):
     class Meta:
-        model = CustomUser  # Используем свою модель
+        model = CustomUser
         fields = ("email",)

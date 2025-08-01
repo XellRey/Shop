@@ -7,7 +7,6 @@ class Cart(models.Model):
     user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='cart')
 
     def total_price(self):
-        """Считает общую стоимость корзины"""
         return sum(item.total_price() for item in self.items.all())
 
 class CartItem(models.Model):
@@ -25,5 +24,4 @@ class CartItem(models.Model):
         super().save(*args, **kwargs)
 
     def total_price(self):
-        """Возвращает стоимость данного товара в корзине"""
         return self.quantity * self.price

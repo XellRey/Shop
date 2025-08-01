@@ -1,0 +1,62 @@
+{% extends "_base.html" %}
+
+{% block title %}Профиль{% endblock %}
+
+{% block content %}
+<body>
+
+  <div class="container">
+    <div class="profile">
+      <div class="avatar">{{ user.first_name|slice:":1" }}</div>
+      <div class="profile-info">
+        <h2>{{ user.get_full_name }}</h2>
+        <p>{{ user.email }}</p>
+      </div>
+      <form method="post" action="{% url 'logout' %}">
+        {% csrf_token %}
+        <button class="btn-logout" type="submit">Выйти</button>
+      </form>
+    </div>
+
+    <nav>
+      <ul>
+        <li><a href="#" class="active">Профиль</a></li>
+      </ul>
+    </nav>
+
+    <section class="profile-info-section">
+      <h3>Информация о профиле</h3>
+      <p><strong>Имя:</strong> {{ user.first_name }} {{ user.last_name }}</p>
+      <p><strong>Email:</strong> {{ user.email }}</p>
+    </section>
+
+    <section class="orders" style="margin-top:40px;">
+      <h3>Мои заказы</h3>
+      <table>
+        <thead>
+          <tr>
+            <th>Номер заказа</th>
+            <th>Дата</th>
+            <th>Сумма</th>
+            <th>Статус</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for order in orders %}
+          <tr>
+            <td>#{{ order.id }}</td>
+            <td>{{ order.created }}</td>
+            <td>{{ order.total_price }} ₽</td>
+            <td>{{ order.status }}</td>
+          </tr>
+          {% empty %}
+          <tr>
+            <td colspan="4">Заказы отсутствуют</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </section>
+  </div>
+</body>
+{% endblock %}

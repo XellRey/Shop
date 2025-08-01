@@ -1,0 +1,17 @@
+<div style="margin-bottom: 30px; padding: 10px; border: 1px solid #ccc;">
+    <h3>Заказ №{{ order.id }} от {{ order.created }}</h3>
+    <p><strong>Статус:</strong> {{ order.get_status_display }}</p>
+    <p><strong>Сумма:</strong> {{ order.total_price }} ₽</p>
+    <p><strong>Адрес доставки:</strong> {{ order.address }}</p>
+    <h4>Товары:</h4>
+    <ul>
+      {% for item in order.items.all %}
+        <li>
+          {{ item.product.name }} —
+          {{ item.quantity }} шт. × {{ item.price }} ₽
+        </li>
+      {% empty %}
+        <li>Нет товаров в этом заказе.</li>
+      {% endfor %}
+    </ul>
+  </div>

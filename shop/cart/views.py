@@ -26,9 +26,16 @@ def clear(request):
 
 
 @login_required
-def update(request, product_id, quantity):
-    cart = CartManager(request.user)
-    cart.update_quantity(product_id, quantity)
+def update(request, product_id):
+    if request.method == 'POST':
+        quantity = request.POST.get('quantity')
+        if quantity:
+            try:
+                quantity = int(quantity)
+                cart = CartManager(request.user)
+                cart.update_quantity(product_id, quantity)
+            except ValueError:
+                pass
     return redirect('cart_detail')
 
 

@@ -1,16 +1,23 @@
 {% extends "_base.html" %}
+{% load static %}
 {% block content %}
+<div class="categories">
+    <a href="{% url 'pizza' %}">Пицца</a>
+    <a href="{% url 'coffe' %}">Кофе</a>
+    <a href="{% url 'drinks' %}">Напитки</a>
+    <a href="{% url 'desserts' %}">Десерты</a>
+    <a href="{% url 'sauce' %}">Соусы</a>
+</div>
 
 <div class="products">
     {% for product in products %}
         <div class="product">
+            <img src="{{product.image.url}}">
             <h3>{{ product.name }}</h3>
             <p>Цена: {{ product.price }} руб.</p>
-
             <form action="{% url 'add_to_cart' product.id %}" method="post">
                 {% csrf_token %}
-                <input type="number" name="quantity" value="1" min="1">
-                <button type="submit">Добавить в корзину</button>
+                <button>Добавить в корзину</button>
             </form>
         </div>
     {% endfor %}

@@ -14,10 +14,14 @@ class CartManager:
         try:
             product = Product.objects.get(id=product_id)
             cart_item, created = CartItem.objects.get_or_create(cart=self.cart, product=product)
+
             if not created:
                 cart_item.quantity += quantity
+            else:
+                cart_item.quantity = quantity
             cart_item.save()
-        except:
+
+        except Product.DoesNotExist:
             pass
 
 
@@ -36,6 +40,9 @@ class CartManager:
                 cart_item.quantity = quantity
                 cart_item.save()
             else:
-                cart_item.delet()
-        except:
+                cart_item.delete()
+        except CartItem.DoesNotExist:
             pass
+
+    def get_total_price(self):
+        return self.cart.total_price()
